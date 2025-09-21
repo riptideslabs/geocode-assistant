@@ -19,11 +19,6 @@ import {
 } from "lucide-react";
 import type { FC } from "react";
 
-import {
-  ComposerAddAttachment,
-  ComposerAttachments,
-  UserMessageAttachments,
-} from "@/components/assistant-ui/attachment";
 import { MarkdownText } from "@/components/assistant-ui/markdown-text";
 import { ToolFallback } from "@/components/assistant-ui/tool-fallback";
 import { TooltipIconButton } from "@/components/assistant-ui/tooltip-icon-button";
@@ -112,25 +107,15 @@ const ThreadWelcomeSuggestions: FC = () => {
     <div className="aui-thread-welcome-suggestions grid w-full gap-2 @md:grid-cols-2">
       {[
         {
-          title: "Explain React hooks",
-          label: "like useState and useEffect",
-          action: "Explain React hooks like useState and useEffect",
+          title: "What address can be found at this location?",
+          label: "47.51612454950182, 19.078518747837276",
+          action: "What address can be found at this location: 47.51612454950182, 19.078518747837276?",
         },
         {
-          title: "Debug this Python code",
-          label: "that's throwing an error",
-          action: "Debug this Python code that's throwing an error",
-        },
-        {
-          title: "Write a SQL query",
-          label: "to find top customers",
-          action: "Write a SQL query to find top customers",
-        },
-        {
-          title: "Create a meal plan",
-          label: "for healthy weight loss",
-          action: "Create a meal plan for healthy weight loss",
-        },
+          title: "What is the coordinates of Heroes Square?",
+          label: "Budapest, Hungary",
+          action: "What is the coordinates of Heroes Square, Budapest, Hungary?",
+        }
       ].map((suggestedAction, index) => (
         <m.div
           initial={{ opacity: 0, y: 20 }}
@@ -173,7 +158,6 @@ const Composer: FC = () => {
         <ThreadWelcomeSuggestions />
       </ThreadPrimitive.Empty>
       <ComposerPrimitive.Root className="aui-composer-root relative flex w-full flex-col rounded-3xl border border-border bg-muted px-1 pt-2 shadow-[0_9px_9px_0px_rgba(0,0,0,0.01),0_2px_5px_0px_rgba(0,0,0,0.06)] dark:border-muted-foreground/15">
-        <ComposerAttachments />
         <ComposerPrimitive.Input
           placeholder="Send a message..."
           className="aui-composer-input mb-1 max-h-32 min-h-16 w-full resize-none bg-transparent px-3.5 pt-1.5 pb-3 text-base outline-none placeholder:text-muted-foreground focus:outline-primary"
@@ -190,8 +174,6 @@ const Composer: FC = () => {
 const ComposerAction: FC = () => {
   return (
     <div className="aui-composer-action-wrapper relative mx-1 mt-2 mb-2 flex items-center justify-between">
-      <ComposerAddAttachment />
-
       <ThreadPrimitive.If running={false}>
         <ComposerPrimitive.Send asChild>
           <TooltipIconButton
@@ -299,8 +281,6 @@ const UserMessage: FC = () => {
         animate={{ y: 0, opacity: 1 }}
         data-role="user"
       >
-        <UserMessageAttachments />
-
         <div className="aui-user-message-content-wrapper relative col-start-2 min-w-0">
           <div className="aui-user-message-content rounded-3xl bg-muted px-5 py-2.5 break-words text-foreground">
             <MessagePrimitive.Parts />
@@ -387,3 +367,17 @@ const BranchPicker: FC<BranchPickerPrimitive.Root.Props> = ({
     </BranchPickerPrimitive.Root>
   );
 };
+
+// const ThreadListNew: FC = () => {
+//   return (
+//     <ThreadListPrimitive.New asChild>
+//       <Button
+//         className="aui-thread-list-new flex items-center justify-start gap-1 rounded-lg px-2.5 py-2 text-start hover:bg-muted data-active:bg-muted"
+//         variant="ghost"
+//       >
+//         <PlusIcon />
+//         New Thread
+//       </Button>
+//     </ThreadListPrimitive.New>
+//   );
+// };

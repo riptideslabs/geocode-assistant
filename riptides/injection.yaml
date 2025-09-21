@@ -1,0 +1,59 @@
+apiVersion: core.riptides.io/v1alpha1
+kind: CredentialSource
+metadata:
+  name: gcp-demo-acc-cs
+  namespace: riptides-system
+spec:
+  gcp:
+    serviceAccount: "gcp-demo-svca@<PROJECT_ID>.iam.gserviceaccount.com"
+    oidcProviderId: "//iam.googleapis.com/projects/<PROJECT_NUMBER>/locations/global/workloadIdentityPools/demo-pool/providers/demo-provider"
+    audience:
+      - "https://iam.googleapis.com/projects/<PROJECT_NUMBER>/locations/global/workloadIdentityPools/demo-pool/providers/demo-provider"
+    lifetime: "3600s"
+---
+apiVersion: core.riptides.io/v1alpha1
+kind: Service
+metadata:
+  name: gcp-geocode-svc
+  namespace: riptides-system
+spec:
+  addresses:
+  - address: geocode.googleapis.com
+    port: 443
+    tags: ["geocode", "gcp"]
+  labels:
+    api: geocode
+  external: true
+---
+apiVersion: core.riptides.io/v1alpha1
+kind: WorkloadIdentity
+metadata:
+  name: gcp-demo-reader
+  namespace: riptides-system
+spec:
+  selectors:
+    - process:name: ["cat"]
+    - process:cmdline: "next-server (v15.5.2)"
+  workloadID: gcp-demo/reader
+  scope:
+    agent:
+      id: <AGENT_WORKLOAD_ID>
+  connection:
+    tls:
+      mode: PERMISSIVE
+  egress:
+    - selectors:
+      - api: geocode
+      credentialName: gcp-demo-acc-cs-gcp-demo-reader-wc
+      connection:
+        tls:
+          intercept: true
+---
+apiVersion: core.riptides.io/v1alpha1
+kind: WorkloadCredential
+metadata:
+  name: gcp-demo-acc-cs-gcp-demo-reader-wc
+  namespace: riptides-system
+spec:
+  workloadID: gcp-demo/reader
+  credentialSource: gcp-demo-acc-cs

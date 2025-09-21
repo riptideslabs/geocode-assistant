@@ -1,25 +1,18 @@
-This is the [assistant-ui](https://github.com/Yonom/assistant-ui) starter project.
+# AI-Assistant Demo for Riptides' credential injection on GCP
 
-## Getting Started
+### Run the project
 
-First, add your OpenAI API key to `.env.local` file:
-
+#### 1. Install the dependencies
 ```
-OPENAI_API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+npm i --legacy-peer-deps
 ```
 
-Then, run the development server:
+#### 2. Create the `.env` file
+```
+cp .env.example .env
+```
 
-```bash
+#### 3. Run the demo
+```
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
