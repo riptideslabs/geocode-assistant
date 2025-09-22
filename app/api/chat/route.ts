@@ -50,9 +50,9 @@ export async function POST(req: Request) {
 
   const addressToCoordTool = tool({
     description:
-      "Converts an address into geographic coordinates",
+      "Converts an address or a given place into geographic coordinates",
     inputSchema: z.object({
-      address: z.string().describe("The address to geocode."),
+      address: z.string().describe("The address or name of the place to geocode."),
     }),
     async *execute(input): AsyncGenerator<Partial<AddressToCoordsResult>> {
       validateMapsKey();
@@ -80,7 +80,8 @@ export async function POST(req: Request) {
           "Content-Type": "application/json",
         },
       });
-      if (!response.ok) throw new Error("Failed to fetch geocode data");
+      
+      if (!response.ok) throw new Error(`Failed to fetch geocode data: ${response.status} - ${response.statusText}`);
       const data = await response.json();
 
       if (data?.errorMessage) {
@@ -131,7 +132,6 @@ export async function POST(req: Request) {
 
       if (!response.ok) throw new Error("Failed to fetch geocode data");
       const data = await response.json();
-      console.log("DATA", data);
 
       if (data?.errorMessage) {
         throw new Error(data.errorMessage);

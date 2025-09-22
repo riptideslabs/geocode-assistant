@@ -74,7 +74,7 @@ const geocodeRenderer: ToolCallMessagePartComponent<ToolCallingArgs, ToolCalling
                 </div>
                 {token && (
                   <div className="text-sm text-muted-foreground">
-                    with access token: {formatToken("none")}
+                    with access token: {formatToken(token)}
                   </div>
                 )}
               </div>
