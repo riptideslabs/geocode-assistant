@@ -7,7 +7,7 @@
 npm i --legacy-peer-deps
 ```
 
-#### 2. Create the `.env` file
+#### 2. Create the `.env` file and fill the env vars
 ```
 cp .env.example .env
 ```
